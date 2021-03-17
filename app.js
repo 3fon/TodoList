@@ -11,7 +11,7 @@ const app = express();
 let list = "/";
 
 mongoose.set('useUnifiedTopology', true);
-mongoose.connect("mongodb://localhost:27017/todolistDB", {useNewUrlParser: true});
+mongoose.connect("mongodb+srv://admin-test:test@cluster0.guakv.mongodb.net/todolistDB", {useNewUrlParser: true});
 
 const itemsSchema = {
     name: String
@@ -49,12 +49,10 @@ app.get("/:customListName", (req, res) => {
             console.log(err);
         } else if (!foundList) {
             // if foundList doesnt exists - create a new list
-            console.log("Creating New list \n");
             const list = new List({
                 name: listName,
             });
             list.save();
-            console.log("redirecting \n");
             res.redirect("/" + listName);
         } else {
             res.render("list", {listTitle: listName, newListItem: foundList.items, whichList: listName})
