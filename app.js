@@ -70,8 +70,8 @@ app.post("/", (req, res) => {
     const item = new Item ({
         name: itemName,
     });
-
-    List.findOne({name: listName}, (err, foundList) => {
+    if (itemName != "") {        
+        List.findOne({name: listName}, (err, foundList) => {
         foundList.items.push(item);
         foundList.save();
         if (listName === "Today"){
@@ -79,7 +79,10 @@ app.post("/", (req, res) => {
         } else {
             res.redirect("/" + listName);
         }
-    });
+    });        
+    }
+    
+    
 
 });
 
